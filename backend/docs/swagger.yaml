@@ -1,0 +1,588 @@
+basePath: /api/v1
+definitions:
+  controllers.User:
+    properties:
+      confirmPassword:
+        type: string
+      dateOfBirth:
+        type: integer
+      email:
+        type: string
+      firstName:
+        type: string
+      gender:
+        type: integer
+      identityCard:
+        type: integer
+      lastName:
+        type: string
+      password:
+        type: string
+      phone:
+        type: integer
+      province:
+        type: integer
+      userType:
+        type: integer
+    type: object
+  ent.Gender:
+    properties:
+      Gender_Name:
+        description: GenderName holds the value of the "Gender_Name" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.GenderEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the GenderQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.GenderEdges:
+    properties:
+      genderID:
+        description: GenderID holds the value of the Gender_ID edge.
+        items:
+          $ref: '#/definitions/ent.User'
+        type: array
+    type: object
+  ent.Province:
+    properties:
+      Province_Name:
+        description: ProvinceName holds the value of the "Province_Name" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.ProvinceEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the ProvinceQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.ProvinceEdges:
+    properties:
+      provinceID:
+        description: ProvinceID holds the value of the Province_ID edge.
+        items:
+          $ref: '#/definitions/ent.User'
+        type: array
+    type: object
+  ent.User:
+    properties:
+      Confirm_password:
+        description: ConfirmPassword holds the value of the "Confirm_password" field.
+        type: string
+      Date_of_birth:
+        description: DateOfBirth holds the value of the "Date_of_birth" field.
+        type: integer
+      Email:
+        description: Email holds the value of the "Email" field.
+        type: string
+      First_name:
+        description: FirstName holds the value of the "First_name" field.
+        type: string
+      Identity_card:
+        description: IdentityCard holds the value of the "Identity_card" field.
+        type: integer
+      Last_name:
+        description: LastName holds the value of the "Last_name" field.
+        type: string
+      Password:
+        description: Password holds the value of the "Password" field.
+        type: string
+      Phone:
+        description: Phone holds the value of the "Phone" field.
+        type: integer
+      edges:
+        $ref: '#/definitions/ent.UserEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the UserQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.UserEdges:
+    properties:
+      genderID:
+        $ref: '#/definitions/ent.Gender'
+        description: GenderID holds the value of the Gender_ID edge.
+        type: object
+      provinceID:
+        $ref: '#/definitions/ent.Province'
+        description: ProvinceID holds the value of the Province_ID edge.
+        type: object
+      userTypeID:
+        $ref: '#/definitions/ent.UserType'
+        description: UserTypeID holds the value of the UserType_ID edge.
+        type: object
+    type: object
+  ent.UserType:
+    properties:
+      UserType_name:
+        description: UserTypeName holds the value of the "UserType_name" field.
+        type: string
+      edges:
+        $ref: '#/definitions/ent.UserTypeEdges'
+        description: |-
+          Edges holds the relations/edges for other nodes in the graph.
+          The values are being populated by the UserTypeQuery when eager-loading is set.
+        type: object
+      id:
+        description: ID of the ent.
+        type: integer
+    type: object
+  ent.UserTypeEdges:
+    properties:
+      userTypeID:
+        description: UserTypeID holds the value of the UserType_ID edge.
+        items:
+          $ref: '#/definitions/ent.User'
+        type: array
+    type: object
+  gin.H:
+    additionalProperties: true
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server for SUT SE 2563
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: SUT SA Example API Playlist Vidoe
+  version: "1.0"
+paths:
+  /Genders/{id}:
+    get:
+      description: get gender by ID
+      operationId: get-gender
+      parameters:
+      - description: Gender ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Gender'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a gender entity by ID
+  /Provinces:
+    get:
+      description: list province entities
+      operationId: list-province
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Province'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List province entities
+  /genders:
+    get:
+      description: list gender entities
+      operationId: list-gender
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.Gender'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List gender entities
+    post:
+      consumes:
+      - application/json
+      description: Create gender
+      operationId: create-gender
+      parameters:
+      - description: Gender entity
+        in: body
+        name: gender
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Gender'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Gender'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create gender
+  /genders/{id}:
+    delete:
+      description: get Gender by ID
+      operationId: delete-Gender
+      parameters:
+      - description: Gender ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a Gender entity by ID
+  /provinces:
+    post:
+      consumes:
+      - application/json
+      description: Create province
+      operationId: create-province
+      parameters:
+      - description: Province entity
+        in: body
+        name: gender
+        required: true
+        schema:
+          $ref: '#/definitions/ent.Province'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Province'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create province
+  /provinces/{id}:
+    get:
+      description: get province by ID
+      operationId: get-province
+      parameters:
+      - description: Province ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.Province'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a province entity by ID
+  /users:
+    get:
+      description: list user entities
+      operationId: list-user
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.User'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List user entities
+    post:
+      consumes:
+      - application/json
+      description: Create user
+      operationId: create-user
+      parameters:
+      - description: User entity
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create user
+  /users/{id}:
+    delete:
+      description: get user by ID
+      operationId: delete-user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/gin.H'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a user entity by ID
+  /usertypes:
+    get:
+      description: list usertype entities
+      operationId: list-usertype
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: Offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/ent.UserType'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: List usertype entities
+    post:
+      consumes:
+      - application/json
+      description: Create usertype
+      operationId: create-usertype
+      parameters:
+      - description: UserType entity
+        in: body
+        name: gender
+        required: true
+        schema:
+          $ref: '#/definitions/ent.UserType'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.UserType'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create usertype
+  /usertypes/{id}:
+    get:
+      description: get usertype by ID
+      operationId: get-usertype
+      parameters:
+      - description: UserType ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/ent.UserType'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a usertype entity by ID
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+  BasicAuth:
+    type: basic
+  OAuth2AccessCode:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: accessCode
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Application:
+    flow: application
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+  OAuth2Implicit:
+    authorizationUrl: https://example.com/oauth/authorize
+    flow: implicit
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      write: ' Grants write access'
+    type: oauth2
+  OAuth2Password:
+    flow: password
+    scopes:
+      admin: ' Grants read and write access to administrative information'
+      read: ' Grants read access'
+      write: ' Grants write access'
+    tokenUrl: https://example.com/oauth/token
+    type: oauth2
+swagger: "2.0"
