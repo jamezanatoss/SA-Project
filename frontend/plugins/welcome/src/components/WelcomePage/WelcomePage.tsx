@@ -18,7 +18,7 @@ const WelcomePage: FC<{}> = () => {
  return (
    <Page theme={pageTheme.home}>
      <Header
-       title={` ${profile.givenName || 'ระบบรับข้อมูลของ Guest'}`}
+       title={` ${profile.givenName || 'ระบบรับข้อมูลของ Guest เพื่อเป็น User'}`}
       
      >
 

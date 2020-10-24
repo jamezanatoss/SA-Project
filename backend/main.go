@@ -85,7 +85,7 @@ func main() {
 	}
 
 	// Set Provinces Data
-	provinces := []string{"กรุงเทพ", "ขอนแก่น","นครราชสีมา"}
+	provinces := []string{"กรุงเทพ","กระบี่", "ขอนแก่น","เชียงใหม่","นครราชสีมา","สุรินทร์"}
 	for _, pr := range provinces {
 		client.Province.
 			Create().

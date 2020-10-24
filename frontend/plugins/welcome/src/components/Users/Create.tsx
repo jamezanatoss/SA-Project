@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Create() {
  const classes = useStyles();
- const profile = { givenName: 'ระบบรับข้อมูลของ Guest' };
+ const profile = { givenName: 'ระบบรับข้อมูลของ Guest เพื่อเป็น User' };
  const api = new DefaultApi();
  
  //const [user, setUser] = useState(initialUserState);
@@ -79,7 +79,7 @@ export default function Create() {
    getGenders();
 
    const getProvinces = async () => {
-    const pr = await api.listProvince({ limit: 2, offset: 0 });
+    const pr = await api.listProvince({ limit: 7, offset: 0 });
     setLoading(false);
     setProvinces(pr);
   };
